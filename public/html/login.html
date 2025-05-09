@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>Stray - A Magyar Közösségi Média</title>
+    <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16">
+
+    <link rel="stylesheet" href="css/main.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/color.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="/js/autologin_login.js" async></script>
+    <script src="/js/loginScripts.js" async></script>
+    <script src="/js/getToken.js" async></script>
+
+    <script>
+
+        function checkMobile() {
+            const isMobile = window.innerWidth <= 1000; // or you can use other screen width threshold
+            if (isMobile) {
+                window.location.href = "/mobile";
+            }
+        }
+        checkMobile()
+    </script>
+
+</head>
+<body>
+
+
+
+
+    <!--<div class="se-pre-con"></div>-->
+    <div class="theme-layout">
+        <div class="container-fluid pdng0">
+            <div class="row merged">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="land-featurearea">
+                        <div class="land-meta">
+                            <h1>Stray</h1>
+                            <p>
+                                Stray az egyetlen közösségi média Magyarországon.
+                            </p>
+                            <div class="friend-logo">
+                                <span><img src="images/wink.png" alt=""></span>
+                            </div>
+                            <a href="https://kirilov.hu/" title="" class="folow-me">Fejlesztette : Kirilov</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="login-reg-bg">
+                        <div class="log-reg-area sign">
+                            <h2 class="log-title">Üdv újra!</h2>
+                            <p>
+                                Új vagy itt? <a href="#" title="">Regisztrálj</a>
+                            </p>
+                            <form method="post">
+                                <div class="form-group">
+                                    <input type="text" required="required" id="username_bar" />
+                                    <label class="control-label" for="input">Név</label><i class="mtrl-select"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" required="required" id="password_bar" />
+                                    <label class="control-label" for="input">Jelszó</label><i class="mtrl-select"></i>
+                                </div>
+                                <a href="#" title="" class="forgot-pwd">Elfelejtetted a jelszavad?</a>
+                                <div class="submit-btns">
+                                    <button class="mtr-btn signin" type="button" onClick="login()"><span>Belép</span></button>
+                                    <button class="mtr-btn signup" type="button"><span>Regisztrálj!</span></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="log-reg-area reg">
+                            <h2 class="log-title">Regisztráció</h2>
+                            <form method="post">
+                                <div class="form-group">
+                                    <input type="text" required="required" id="username_bar_reg"/>
+                                    <label class="control-label" for="input">Felhasználónév</label><i class="mtrl-select"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" required="required" id="password_bar_reg"/>
+                                    <label class="control-label" for="input">Jelszó</label><i class="mtrl-select"></i>
+                                </div>
+                                <div class="form-radio">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="radio" checked="checked" /><i class="check-box"></i>Férfi
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="radio" /><i class="check-box"></i>Nő
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" required="required" id="email_bar"/>
+                                    <label class="control-label" for="input"><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6c29010d05002c">Email</a></label><i class="mtrl-select"></i>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" /><i class="check-box"></i>Elfogadja az Általános Szerződési Feltételeket?
+                                    </label>
+                                </div>
+                                <a href="#" title="" class="already-have">Már van fiókom!</a>
+                                <div class="submit-btns">
+                                    <button class="mtr-btn signup" type="button" onclick="register()"><span>Register</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="js/main.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>	
+
+</html>

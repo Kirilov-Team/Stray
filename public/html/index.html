@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<title>Stray - A Magyar Közösségi Média</title>
+	<link rel="icon" href="/images/fav.png" type="image/png" sizes="16x16">
+	<link rel="stylesheet" href="/css/main.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/color.css">
+	<link rel="stylesheet" href="/css/responsive.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<script src="/js/autologin_app.js" async></script>
+	<script src="/js/posting.js" async></script>
+	<script>
+		function checkMobile() {
+			const isMobile = window.innerWidth <= 1000;
+			if (isMobile) {
+				window.location.href = "/mobile";
+			}
+		}
+		checkMobile();
+
+		function logout() {
+			// Clear local storage
+			localStorage.clear();
+
+			// Clear cookies
+			document.cookie.split(";").forEach(function (c) {
+				document.cookie = c.trim().split("=")[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+			});
+
+			// Redirect to the login page or home page
+			window.location.href = "/login";
+		}
+	</script>
+	<style>
+		body {
+			font-family: 'Arial', sans-serif;
+			background-color: #f0f2f5;
+			color: #333;
+		}
+
+		.navbar-brand {
+			display: inline-block;
+			padding-top: 0.0625rem;
+			padding-bottom: 0.0625rem;
+			margin-right: 1.25rem;
+			font-size: 2.5rem;
+			line-height: inherit;
+			white-space: nowrap;
+			color: #007bff;
+			transition: color 0.3s;
+		}
+
+			.navbar-brand:hover,
+			.navbar-brand:focus {
+				text-decoration: none;
+				color: #0056b3;
+			}
+
+		.heading-black {
+			font-weight: 800;
+		}
+
+		.topbar {
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			padding: 10px 20px;
+			position: fixed;
+			width: 100%;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+		}
+
+		.theme-layout {
+			margin-top: 60px;
+		}
+
+		.sidebar {
+			background-color: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			margin-bottom: 20px;
+			position: sticky;
+			top: 80px;
+		}
+
+		.widget-title {
+			font-size: 1.2rem;
+			margin-bottom: 10px;
+			color: #007bff;
+		}
+
+		.naves li {
+			margin-bottom: 10px;
+		}
+
+			.naves li a {
+				color: #333;
+				transition: color 0.3s;
+			}
+
+				.naves li a:hover {
+					color: #007bff;
+				}
+
+		.central-meta {
+			background-color: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			margin-bottom: 20px;
+		}
+
+		.new-postbox {
+			display: flex;
+			align-items: center;
+		}
+
+			.new-postbox figure {
+				margin-right: 10px;
+			}
+
+		.newpst-input {
+			flex: 1;
+		}
+
+			.newpst-input textarea {
+				width: 100%;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				padding: 10px;
+				resize: none;
+			}
+
+		.attachments ul {
+			display: flex;
+			align-items: center;
+			margin-top: 10px;
+		}
+
+			.attachments ul li {
+				margin-right: 10px;
+			}
+
+				.attachments ul li button {
+					background-color: #007bff;
+					color: #fff;
+					border: none;
+					border-radius: 4px;
+					padding: 5px 10px;
+					cursor: pointer;
+					transition: background-color 0.3s, transform 0.3s;
+				}
+
+					.attachments ul li button:hover {
+						background-color: #0056b3;
+						transform: scale(1.05);
+					}
+
+					.attachments ul li button:focus {
+						outline: none;
+						box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+					}
+
+		.user-post {
+			animation: fadeInUp 0.5s;
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.footer {
+			background-color: #fff;
+			padding: 20px;
+			box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+			margin-top: 20px;
+		}
+
+			.footer .widget-title {
+				font-size: 1.2rem;
+				margin-bottom: 10px;
+				color: #007bff;
+			}
+
+			.footer .list-style li {
+				margin-bottom: 10px;
+			}
+
+				.footer .list-style li a {
+					color: #333;
+					transition: color 0.3s;
+				}
+
+					.footer .list-style li a:hover {
+						color: #007bff;
+					}
+
+		.bottombar {
+			background-color: #007bff;
+			color: #fff;
+			padding: 10px 20px;
+			text-align: center;
+		}
+
+			.bottombar a {
+				color: #fff;
+				text-decoration: underline;
+			}
+
+		.post-meta img {
+			width: 100%;
+			max-width: 300px;
+			height: auto;
+			margin-top: 10px;
+		}
+
+		button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: background-color 0.3s, transform 0.3s;
+		}
+
+			button:hover {
+				background-color: #0056b3;
+				transform: scale(1.05);
+			}
+
+			button:focus {
+				outline: none;
+				box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+			}
+	</style>
+</head>
+
+<body>
+	<div class="theme-layout">
+		<div class="topbar">
+			<div class="logo">
+				<a class="navbar-brand heading-black" href="/app">
+					Stray<br>
+				</a>
+			</div>
+		</div><!-- topbar -->
+
+		<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-3">
+							<aside class="sidebar static">
+								<div class="widget">
+									<h4 class="widget-title">Kattintgató</h4>
+									<ul class="naves">
+										<li>
+											<i class="ti-clipboard"></i>
+											<a href="/app/profile" title="">Profil</a>
+										</li>
+										<li>
+											<i class="ti-mouse-alt"></i>
+											<a href="inbox.html" title="">Klánok</a>
+										</li>
+										<li>
+											<i class="ti-files"></i>
+											<a href="fav-page.html" title="">Haverok</a>
+										</li>
+										<li>
+											<i class="ti-power-off"></i>
+											<a href="javascript:void(0);" title="" onclick="logout()">Cső, én léptem!</a>
+										</li>
+									</ul>
+								</div><!-- Shortcuts -->
+
+								<div class="widget stick-widget">
+									<div class="widget">
+										<div class="banner medium-opacity bluesh">
+											<div class="bg-image" style="background-image: url(images/resources/baner-widgetbg.jpg)"></div>
+											<div class="baner-top">
+												<span><img alt="" src="images/book-icon.png"></span>
+												<i class="fa fa-ellipsis-h"></i>
+											</div>
+											<div class="banermeta">
+												<p>
+													Segíts, hogy tovább pörögjünk, különben megint a macskától kérünk kölcsön!
+												</p>
+												<span>Adományozz, hogy fenn tudjuk tartani a platformot</span>
+												<a data-ripple="" title="" href="#">Adományozz!</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</aside>
+						</div><!-- sidebar -->
+						<div class="col-lg-6">
+							<div class="central-meta">
+								<div class="new-postbox">
+									<figure>
+										<img src="images/resources/profile.png" alt="" id="write_message_profile_pic">
+									</figure>
+									<div class="newpst-input">
+										<textarea rows="2" placeholder="Írj, mielőtt a billentyűzet elalszik!" id="post_text" name="post_text"></textarea>
+										<div class="attachments">
+											<ul>
+												<li>
+													<i class="fa fa-image"></i>
+													<label class="fileContainer">
+														<input type="file" id="image_input">
+													</label>
+												</li>
+												<li>
+													<i class="fa fa-video-camera"></i>
+													<label class="fileContainer">
+														<input type="file">
+													</label>
+												</li>
+												<li>
+													<button onclick="postContent()" id="send_button">Mehet!</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div><!-- add post new box -->
+
+							<div id="posts_div">
+								<div class="central-meta item user-post animate__animated animate__fadeInUp" id="user_post0">
+									<div class="user-post">
+										<div class="friend-info">
+											<figure>
+												<img src="images/resources/profile.png" alt="" id="main_post_profile_pic">
+											</figure>
+											<div class="friend-name">
+												<ins><a href="time-line.html" title="" id="main_post_username"></a></ins>
+												<span id="main_post_date"></span>
+											</div>
+											<div class="post-meta">
+												<div class="description">
+													<p id="main_post_text"></p>
+												</div>
+												<img src="" alt="" id="main_post_image">
+												<div class="we-video-info">
+													<ul>
+														<li>
+															<span class="views" data-toggle="tooltip" title="views">
+																<i class="fa fa-eye"></i>
+																<ins>0</ins>
+															</span>
+														</li>
+														<li>
+															<span class="comment" data-toggle="tooltip" title="Comments">
+																<i class="fa fa-comments-o"></i>
+																<ins>0</ins>
+															</span>
+														</li>
+														<li>
+															<span class="like" data-toggle="tooltip" title="like">
+																<i class="ti-heart"></i>
+																<ins>0</ins>
+															</span>
+														</li>
+														<li>
+															<span class="dislike" data-toggle="tooltip" title="dislike">
+																<i class="ti-heart-broken"></i>
+																<ins>0</ins>
+															</span>
+														</li>
+														<li class="social-media">
+															<div class="menu">
+																<div class="btn trigger"><i class="fa fa-share-alt"></i></div>
+																<div class="rotater">
+																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-html5"></i></a></div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-facebook"></i></a></div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-google-plus"></i></a></div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-twitter"></i></a></div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-css3"></i></a></div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon">
+																		<a href="#" title=""><i class="fa fa-instagram"></i></a>
+																	</div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon">
+																		<a href="#" title=""><i class="fa fa-dribbble"></i></a>
+																	</div>
+																</div>
+																<div class="rotater">
+																	<div class="btn btn-icon">
+																		<a href="#" title=""><i class="fa fa-pinterest"></i></a>
+																	</div>
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<div class="coment-area-container" style="display: none;">
+											<div class="coment-area">
+												<ul class="we-comet" id="comments_list0">
+													<!-- Comments will be loaded here -->
+												</ul>
+												<div class="post-comment">
+													<div class="comet-avatar">
+														<img src="images/resources/comet-1.jpg" alt="">
+													</div>
+													<div class="post-comt-box">
+														<form method="post" onsubmit="addComment(event, 'user_post0')">
+															<textarea placeholder="Post your comment" id="comment_text0"></textarea>
+															<button type="submit">Comment</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+										<button onclick="toggleComments('user_post0')">Show Comments</button>
+									</div>
+								</div>
+							</div>
+							<div id="load_more_trigger"></div>
+						</div><!-- centerl meta -->
+						<div class="col-lg-3">
+							<aside class="sidebar static">
+								<div class="widget">
+									<h4 class="widget-title">Ez vagy te</h4>
+									<div class="your-page">
+										<figure>
+											<a href="#" title=""><img src="images/resources/profile.png" alt="" id="sidebar_profile_pic"></a>
+										</figure>
+										<div class="page-meta">
+											<a href="#" title="" class="underline" id="username_main">...</a>
+											<span><i class="ti-comment"></i><a href="insight.html" title="">Üzenetek<em>9</em></a></span>
+											<span><i class="ti-bell"></i><a href="insight.html" title="">Pingek<em>2</em></a></span>
+											<script>
+												document.getElementById("username_main").textContent = localStorage['username'] || "Hiba!";
+											</script>
+										</div>
+									</div>
+								</div><!-- page like widget -->
+							</aside>
+						</div><!-- sidebar -->
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-4">
+					<div class="widget">
+						<div class="foot-logo">
+							<div class="logo">
+								<a href="index-2.html" title=""><img src="images/logo.png" alt=""></a>
+							</div>
+							<p>
+								The trio took this simple idea and built it into the world’s leading carpooling platform.
+							</p>
+						</div>
+						<ul class="location">
+							<li>
+								<i class="ti-map-alt"></i>
+								<p>33 new montgomery st.750 san francisco, CA USA 94105.</p>
+							</li>
+							<li>
+								<i class="ti-mobile"></i>
+								<p>+1-56-346 345</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<div class="widget">
+						<div class="widget-title"><h4>follow</h4></div>
+						<ul class="list-style">
+							<li><i class="fa fa-facebook-square"></i> <a href="https://web.facebook.com/shopcircut/" title="">facebook</a></li>
+							<li><i class="fa fa-twitter-square"></i><a href="https://twitter.com/login?lang=en" title="">twitter</a></li>
+							<li><i class="fa fa-instagram"></i><a href="https://www.instagram.com/?hl=en" title="">instagram</a></li>
+							<li><i class="fa fa-google-plus-square"></i> <a href="https://plus.google.com/discover" title="">Google+</a></li>
+							<li><i class="fa fa-pinterest-square"></i> <a href="https://www.pinterest.com/" title="">Pintrest</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<div class="widget">
+						<div class="widget-title"><h4>Navigate</h4></div>
+						<ul class="list-style">
+							<li><a href="about.html" title="">about us</a></li>
+							<li><a href="contact.html" title="">contact us</a></li>
+							<li><a href="terms.html" title="">terms & Conditions</a></li>
+							<li><a href="#" title="">RSS syndication</a></li>
+							<li><a href="sitemap.html" title="">Sitemap</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<div class="widget">
+						<div class="widget-title"><h4>useful links</h4></div>
+						<ul class="list-style">
+							<li><a href="#" title="">leasing</a></li>
+							<li><a href="#" title="">submit route</a></li>
+							<li>
+								<a href="#" title="">
+									how does
+									it work?
+								</a>
+							</li>
+							<li><a href="#" title="">agent listings</a></li>
+							<li><a href="#" title="">view all</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4">
+					<div class="widget">
+						<div class="widget-title"><h4>download apps</h4></div>
+						<ul class="colla-apps">
+							<li><a href="https://play.google.com/store?hl=en" title=""><i class="fa fa-android"></i>android</a></li>
+							<li><a href="https://www.apple.com/lae/ios/app-store/" title=""><i class="ti-apple"></i>iPhone</a></li>
+							<li><a href="https://www.microsoft.com/store/apps" title=""><i class="fa fa-windows"></i>Windows</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer><!-- footer -->
+	<div class="bottombar">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<span class="copyright"><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></span>
+					<i><img src="images/credit-cards.png" alt=""></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="side-panel">
+		<h4 class="panel-title">General Setting</h4>
+		<form method="post">
+			<div class="setting-row">
+				<span>use night mode</span>
+				<input type="checkbox" id="nightmode1" />
+				<label for="nightmode1" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Notifications</span>
+				<input type="checkbox" id="switch22" />
+				<label for="switch22" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Notification sound</span>
+				<input type="checkbox" id="switch33" />
+				<label for="switch33" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>My profile</span>
+				<input type="checkbox" id="switch44" />
+				<label for="switch44" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Show profile</span>
+				<input type="checkbox" id="switch55" />
+				<label for="switch55" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+		</form>
+		<h4 class="panel-title">Account Setting</h4>
+		<form method="post">
+			<div class="setting-row">
+				<span>Sub users</span>
+				<input type="checkbox" id="switch66" />
+				<label for="switch66" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>personal account</span>
+				<input type="checkbox" id="switch77" />
+				<label for="switch77" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Business account</span>
+				<input type="checkbox" id="switch88" />
+				<label for="switch88" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Show me online</span>
+				<input type="checkbox" id="switch99" />
+				<label for="switch99" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Delete history</span>
+				<input type="checkbox" id="switch101" />
+				<label for="switch101" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+			<div class="setting-row">
+				<span>Expose author name</span>
+				<input type="checkbox" id="switch111" />
+				<label for="switch111" data-on-label="ON" data-off-label="OFF"></label>
+			</div>
+		</form>
+	</div><!-- side panel -->
+
+	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+	<script src="js/main.min.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/map-init.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
+
+	<script>
+		function clone_post(new_id) {
+			const node = document.getElementById(`user_post0`);
+			const clone = node.cloneNode(true);
+			clone.id = `user_post${new_id}`;
+			clone.querySelectorAll('[id]').forEach(element => {
+				element.id = element.id.replace('0', new_id);
+			});
+			const form = clone.querySelector('form');
+			form.onsubmit = function (event) {
+				addComment(event, `user_post${new_id}`);
+			};
+			const button = clone.querySelector('button[onclick^="toggleComments"]');
+			button.setAttribute('onclick', `toggleComments('user_post${new_id}')`);
+			document.getElementById("posts_div").appendChild(clone);
+		}
+
+		function load_first_post() {
+			fetch("/api/get_post", {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			})
+				.then(response => response.json())
+				.then(data => {
+					document.querySelector(`#user_post0 #main_post_text`).innerHTML = data.content;
+					document.querySelector(`#user_post0 #main_post_username`).innerHTML = data.user;
+
+					function convertToHungarianTime(utcDate) {
+						const date = new Date(utcDate);
+						const hungarianTime = date.toLocaleString('hu-HU', {
+							timeZone: 'Europe/Budapest',
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+							second: '2-digit'
+						});
+						return hungarianTime;
+					}
+
+					const utcTime = data.date;
+					const readableHungarianTime = convertToHungarianTime(utcTime);
+
+					document.querySelector(`#user_post0 #main_post_date`).innerHTML = readableHungarianTime;
+
+					const imgElement = document.querySelector(`#user_post0 #main_post_image`);
+					imgElement.src = "";
+
+					const base64ImageData = data.image.img.data;
+					const mimeType = data.image.img.contentType;
+					imgElement.src = `data:${mimeType};base64,${base64ImageData}`;
+					imgElement.style.width = "300px";
+
+					const profilePicElement = document.querySelector(`#user_post0 #main_post_profile_pic`);
+					if (data.userProfilePicture) {
+						const profilePicData = data.userProfilePicture.data;
+						const profilePicMimeType = data.userProfilePicture.contentType;
+						profilePicElement.src = `data:${profilePicMimeType};base64,${profilePicData}`;
+					} else {
+						profilePicElement.src = "images/resources/profile.png"; // Default profile picture
+					}
+				});
+		}
+
+		load_first_post();
+
+		function load_new_post() {
+			console.log("load_new_post called");
+			fetch("/api/get_post", {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			})
+				.then(response => response.json())
+				.then(data => {
+					console.log("New post data:", data);
+					clone_post(data._id);
+					document.querySelector(`#user_post${data._id} #main_post_text`).innerHTML = data.content;
+					document.querySelector(`#user_post${data._id} #main_post_username`).innerHTML = data.user;
+
+					function convertToHungarianTime(utcDate) {
+						const date = new Date(utcDate);
+						const hungarianTime = date.toLocaleString('hu-HU', {
+							timeZone: 'Europe/Budapest',
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+							second: '2-digit'
+						});
+						return hungarianTime;
+					}
+
+					const utcTime = data.date;
+					const readableHungarianTime = convertToHungarianTime(utcTime);
+
+					document.querySelector(`#user_post${data._id} #main_post_date`).innerHTML = readableHungarianTime;
+
+					const base64ImageData = data.image.img.data;
+					const imgElement = document.querySelector(`#user_post${data._id} #main_post_image`);
+					const mimeType = data.image.img.contentType;
+					imgElement.src = `data:${mimeType};base64,${base64ImageData}`;
+
+					const profilePicElement = document.querySelector(`#user_post${data._id} #main_post_profile_pic`);
+					if (data.userProfilePicture) {
+						const profilePicData = data.userProfilePicture.data;
+						const profilePicMimeType = data.userProfilePicture.contentType;
+						profilePicElement.src = `data:${profilePicMimeType};base64,${profilePicData}`;
+					} else {
+						profilePicElement.src = "images/resources/profile.png"; // Default profile picture
+					}
+				})
+				.catch(error => {
+					console.error("Error loading new post:", error);
+				});
+		}
+
+		function addComment(event, postId) {
+			event.preventDefault();
+			const commentText = document.querySelector(`#${postId} .post-comt-box textarea`).value;
+			const commentData = {
+				postId: postId.replace('user_post', ''),
+				user: localStorage['username'] || "Anonymous",
+				date: new Date().toISOString(),
+				text: commentText
+			};
+
+			fetch('/api/add_comment', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(commentData)
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.message === 'Comment added successfully') {
+						loadComments(postId);
+					}
+				});
+		}
+
+		function loadComments(postId) {
+			const postIndex = postId.replace('user_post', '');
+			fetch(`/api/get_comments/${postIndex}`, {
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' }
+			})
+				.then(response => response.json())
+				.then(comments => {
+					const commentsList = document.querySelector(`#${postId} .we-comet`);
+					commentsList.innerHTML = '';
+					comments.forEach(comment => {
+						const commentItem = document.createElement('li');
+						commentItem.innerHTML = `
+								<div class="comet-avatar">
+									<img src="images/resources/comet-1.jpg" alt="">
+								</div>
+								<div class="we-comment">
+									<div class="coment-head">
+										<h5><a href="time-line.html" title="">${comment.user}</a></h5>
+										<span>${comment.date}</span>
+										<a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+									</div>
+									<p>${comment.text}</p>
+								</div>
+							`;
+						commentsList.appendChild(commentItem);
+					});
+				});
+		}
+
+		function toggleComments(postId) {
+			const commentsContainer = document.querySelector(`#${postId} .coment-area-container`);
+			if (commentsContainer.style.display === 'none' || commentsContainer.style.display === '') {
+				commentsContainer.style.display = 'block';
+				loadComments(postId);
+			} else {
+				commentsContainer.style.display = 'none';
+			}
+		}
+
+		const loadMoreTrigger = document.getElementById('load_more_trigger');
+		const observer = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				console.log("load_more_trigger is intersecting");
+				load_new_post();
+			}
+		}, {
+			root: null,
+			rootMargin: '0px',
+			threshold: 1.0
+		});
+
+		observer.observe(loadMoreTrigger);
+
+		function loadProfilePictures() {
+			fetch("/api/get_user_details?username=" + localStorage['username'], {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			})
+				.then(response => response.json())
+				.then(data => {
+					const profilePicElements = [
+						document.querySelector("#write_message_profile_pic"),
+						document.querySelector("#sidebar_profile_pic")
+					];
+
+					profilePicElements.forEach(element => {
+						if (data.profilePicture) {
+							const profilePicData = data.profilePicture.data;
+							const profilePicMimeType = data.profilePicture.contentType;
+							element.src = `data:${profilePicMimeType};base64,${profilePicData}`;
+						} else {
+							element.src = "images/resources/profile.png"; // Default profile picture
+						}
+					});
+				})
+				.catch(error => {
+					console.error("Error loading profile pictures:", error);
+				});
+		}
+
+		loadProfilePictures();
+	</script>
+</body>
+</html>
