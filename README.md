@@ -1,9 +1,16 @@
 ## Setup
 
-npm install
+# Step 1
 
-edit .env file : 
+Install packages
 
+```npm install```
+
+# Step 2 
+
+Edit .env file : 
+
+```
 db_uri="YOUR_MONGODB_URI"
 
 key="YOUR_CHOICE"
@@ -13,8 +20,12 @@ user="GMAIL_ADDRESS"
 pass="EMAIL_PASSWORD"
 
 PORT=80
+```
+# Step 3
 
+Edit all the localhost in the code to the ip you want.
 
-Edit all the localhost in the code to the ip you want and You are Done!
+### You are Done!
 
-Feel free to use it freely!
+You can use it freely if you tell it us in email : ```kirilovcode@gmail.com``` Don't worry! We will allow you regardless the usecase.
+
